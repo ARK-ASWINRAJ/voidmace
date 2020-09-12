@@ -50,16 +50,21 @@
     <script>
       const room = 'general';
       const socket = io('/tech');
+      var nickname = sessionStorage.getItem("nickname");
+      if(nickname==""){
+        nickname="Nameless_Idiot";
+      }
+      
       $('form').submit(() => {
         let msg = $('#m').val();
-        socket.emit('message', { msg, room });
+        socket.emit('message', {nickname, msg, room });
         $('#m').val('');
         return false;
       });
 
       socket.on('connect', () => {
         // emiting to everybody
-        socket.emit('join', { room: room });
+        socket.emit('join', { room: room, nickname:nickname });
       })
 
       socket.on('message', (msg) => {
@@ -71,6 +76,7 @@
         $('#messages').append($('<li style="color:#66ff33">').text(msg));
         $("html").scrollTop($("html")[0].scrollHeight);
       })
+
       socket.on('userjleft', (msg) => {
         $('#messages').append($('<li style="color:#ff3333">').text(msg));
         $("html").scrollTop($("html")[0].scrollHeight);

@@ -53,16 +53,20 @@
     <script>
       const room = 'technical';
       const socket = io('/tech');
+      var nickname = sessionStorage.getItem("nickname");
+      if(nickname==""){
+        nickname="Nameless_Idiot";
+      }
      $('form').submit(() => {
         let msg = $('#m').val();
-        socket.emit('message', { msg, room });
+        socket.emit('message', { nickname,msg, room });
         $('#m').val('');
         return false;
       });
 
       socket.on('connect', () => {
         // emiting to everybody
-        socket.emit('join', { room: room });
+        socket.emit('join', { room: room ,nickname:nickname });
       })
 
       socket.on('message', (msg) => {
