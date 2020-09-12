@@ -7,8 +7,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
     <style>
     
-      form { padding:30px; position: fixed; bottom: 0; width: 98%; padding-right:30px ;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);}
-      #messages { list-style-type: none; margin: 0; bottom:0; padding: 0; width: 100%;}
+      form { padding:30px; position: fixed; bottom: 0; width: 100%; padding-right:30px ;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);background-color: white;left:0;}
+      #messages { list-style-type: none; margin: 0; bottom:0; padding: 0; width: 100%;padding-bottom: 140px;}
       #messages li { padding: 5px 15px;  margin: 5px;  border: 2px solid #4ddbff; border-radius: 30px;  word-break: break-all; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);}
       #messages li:nth-child(odd) {background: #e0ebeb} 
       #messages li:nth-child(even){background: #eee}
@@ -63,10 +63,12 @@
 
       socket.on('message', (msg) => {
         $('#messages').append($('<li>').text(msg));
+        $("html").scrollTop($("html")[0].scrollHeight);
       })
 
       socket.on('userjl', (msg) => {
         $('#messages').append($('<li style="list-style-type:circle;">').text(msg));
+        $("html").scrollTop($("html")[0].scrollHeight);
       })
     </script>
   </body>
