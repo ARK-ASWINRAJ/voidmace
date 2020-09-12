@@ -74,6 +74,10 @@
         $('#messages').append($('<li style="color:#66ff33">').text(msg));
         $("html").scrollTop($("html")[0].scrollHeight);
       })
+      socket.on('userjleft', (msg) => {
+        $('#messages').append($('<li style="color:#ff3333">').text(msg));
+        $("html").scrollTop($("html")[0].scrollHeight);
+      })
     </script>
   </body>
 </html>

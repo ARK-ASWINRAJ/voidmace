@@ -45,7 +45,7 @@ tech.on('connection', (socket) => {
    socket.on('disconnect', () => {
        
         online[currentRoomId]=online[currentRoomId]-1;
-        tech.in(currentRoomId).emit('userjl',  `User left the room!.   Online:${online[currentRoomId]}` );
+        tech.in(currentRoomId).emit('userjleft',  `User left the room!.   Online:${online[currentRoomId]}` );
           
     })
     
