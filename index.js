@@ -26,22 +26,28 @@ app.get('/general', (req, res) => {
 // tech namespace
 const tech = io.of('/tech');
 
+var online= {general:0, technical:0, confessions:0};
 
 tech.on('connection', (socket) => {
+    var currentRoomId;
     socket.on('join', (data) => {
         socket.join(data.room);
-        tech.in(data.room).emit('userjl', `New user joined ${data.room} room!`);
+        currentRoomId = data.room;
+        online[currentRoomId]=online[currentRoomId]+1;
+        tech.in(data.room).emit('userjl', `New user joined ${data.room} room!.   Online:${online[currentRoomId]}`);
     })
 
     socket.on('message', (data) => {
-        console.log(`message: ${data.msg}`);
+        
         tech.in(data.room).emit('message', data.msg);
     });
 
-    socket.on('disconnect', () => {
-        
-        console.log('user disconnected');
-
-        tech.emit('userjl',  `User left the room!.` );
+   socket.on('disconnect', () => {
+       
+        online[currentRoomId]=online[currentRoomId]-1;
+        tech.in(currentRoomId).emit('userjl',  `User left the room!.   Online:${online[currentRoomId]}` );
+          
     })
+    
 })
+
